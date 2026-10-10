@@ -37,7 +37,7 @@ const DEFAULT_TICKETS = [
     validUntil: "09.10.26 18:25",
     type: "Bilet metropolitan Zona 1",
     minutes: 60,
-    order: "TEST-0002",
+    order: "251043635",
     errorCode: "E-1002",
     startPercent: 15,
     minutesAgo: 15,
@@ -88,6 +88,14 @@ const fmtShort = (d) =>
   `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${String(d.getFullYear()).slice(
     2
   )} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+// Numărul de comandă crește cu 100 pe zi, pornind de la valorile din 10.10.2026
+const ORDER_BASE_DAY = new Date(2026, 9, 10);
+const orderOf = (t) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const days = Math.round((today - ORDER_BASE_DAY) / 86400000);
+  return String(Number(t.order) + days * 100);
+};
 const endOf = (t) => new Date(starts[t.id] + t.minutes * 60000);
 
 const carousel = document.getElementById("ticketCarousel");
@@ -204,9 +212,11 @@ function renderDetail() {
   $("tdEnd").textContent = fmtLong(end);
   $("tdBought").textContent = fmtLong(start);
   $("tdType").textContent = t.type;
-  $("tdOrder").textContent = t.order;
+  $("tdOrder").textContent = orderOf(t);
   $("tdError").textContent = `Cod control valabil 14 secunde.`;
-  $("tdProgress").style.width = `${t.startPercent + ((total - left) / total) * (100 - t.startPercent)}%`;
+  $("tdProgress").style.width = `${
+    t.startPercent + ((total - left) / total) * (100 - t.startPercent)
+  }%`;
 }
 
 function showTicket(i) {
@@ -216,7 +226,7 @@ function showTicket(i) {
     saveStarts(starts);
     renderValidity();
   }
-  const loader = $('loader');
+  const loader = $("loader");
   loader.hidden = false;
   setTimeout(() => {
     renderDetail();
@@ -246,7 +256,9 @@ $("navTransactions").addEventListener("click", () => {
 });
 $("transactionsBack").addEventListener("click", () => {
   transactionsScreen.hidden = true;
-  document.querySelectorAll(".nav-item").forEach((b, i) => b.classList.toggle("active", i === 0));
+  document
+    .querySelectorAll(".nav-item")
+    .forEach((b, i) => b.classList.toggle("active", i === 0));
 });
 $("tdReset").addEventListener("click", () => {
   starts = {};
@@ -261,8 +273,11 @@ function renderTicketCount() {
 renderTicketCount();
 
 $("ticketAdd").addEventListener("click", () => {
-  const last = tickets[tickets.length - 1] || DEFAULT_TICKETS[0];
-  tickets.push(withPattern({ ...last, id: `t${Date.now()}` }, tickets.length));
+  const last = tickets[tickets.length - 1];
+  const ticket = last
+    ? { ...last, id: `t${Date.now()}`, order: String(Number(last.order) + 1) }
+    : { ...DEFAULT_TICKETS[0], id: `t${Date.now()}` };
+  tickets.push(withPattern(ticket, tickets.length));
   saveTickets();
   renderCarousel();
   renderTicketCount();
