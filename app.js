@@ -57,7 +57,12 @@ const saveTickets = () => {
     localStorage.setItem(TICKETS_KEY, JSON.stringify(tickets));
   } catch {}
 };
-let tickets = loadTickets();
+// Regula: biletele alternează 10% / 10 min, 15% / 15 min, 10, 15, ...
+const withPattern = (t, i) => {
+  const v = i % 2 === 0 ? 10 : 15;
+  return { ...t, startPercent: v, minutesAgo: v };
+};
+let tickets = loadTickets().map(withPattern);
 
 const STORAGE_KEY = "tlp-test-ticket-starts";
 const loadStarts = () => {
@@ -125,7 +130,7 @@ function renderValidity() {
 }
 setInterval(renderValidity, 10000);
 
-const slideWidth = () => carousel.firstElementChild.offsetWidth + 15; // card + gap
+const slideWidth = () => (carousel.firstElementChild?.offsetWidth || 0) + 15; // card + gap
 const goTo = (i) =>
   carousel.scrollTo({ left: i * slideWidth(), behavior: "smooth" });
 
@@ -249,21 +254,21 @@ $("tdReset").addEventListener("click", () => {
   renderValidity();
 });
 
-// Adăugare / eliminare bilete; noul bilet copiază ultimul bilet din listă
+// Adăugare / eliminare bilete; noul bilet copiază ultimul bilet (sau primul implicit dacă lista e goală)
 function renderTicketCount() {
   $("ticketCount").textContent = `Bilete: ${tickets.length}`;
 }
 renderTicketCount();
 
 $("ticketAdd").addEventListener("click", () => {
-  const last = tickets[tickets.length - 1];
-  tickets.push({ ...last, id: `t${Date.now()}` });
+  const last = tickets[tickets.length - 1] || DEFAULT_TICKETS[0];
+  tickets.push(withPattern({ ...last, id: `t${Date.now()}` }, tickets.length));
   saveTickets();
   renderCarousel();
   renderTicketCount();
 });
 $("ticketRemove").addEventListener("click", () => {
-  if (tickets.length <= 1) return;
+  if (tickets.length === 0) return;
   const removed = tickets.pop();
   delete starts[removed.id];
   saveStarts(starts);
