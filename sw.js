@@ -1,4 +1,4 @@
-const CACHE_NAME = "tlp-app-v38";
+const CACHE_NAME = "tlp-app-v39";
 const ASSETS = [
   "./",
   "./index.html",

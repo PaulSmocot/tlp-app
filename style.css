@@ -463,7 +463,7 @@ button { font-family: inherit; }
 /* ─── BOTTOM NAV ─────────────────────────────────── */
 .bottom-nav {
   position: fixed;
-  bottom: -30px;
+  bottom: -15px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
