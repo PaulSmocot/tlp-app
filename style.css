@@ -471,9 +471,9 @@ button { font-family: inherit; }
   background: var(--nav-bg);
   border-top: 1px solid #2a2e38;
   display: grid;
-  padding: 10px 0 0;
+  grid-template-columns: repeat(5, 1fr);
   align-items: start;
-  padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
+  padding: 10px 0 0;
   z-index: 100;
 }
 
