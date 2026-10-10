@@ -96,7 +96,7 @@ function renderCarousel() {
       <div class="ticket-logo"><img src="${t.logo}" alt=""></div>
       <div class="ticket-info">
         <p class="ticket-operator">${t.operator}</p>
-        <p class="ticket-valid">Valabil până la ${t.validUntil}</p>
+        <p class="ticket-valid"></p>
         <p class="ticket-type">${t.type}</p>
       </div>
     </article>`
@@ -109,7 +109,21 @@ function renderCarousel() {
   dots
     .querySelectorAll(".dot")
     .forEach((d, i) => d.addEventListener("click", () => goTo(i)));
+  renderValidity();
 }
+
+// „Valabil până la” = aceeași oră de final ca în detaliul biletului.
+// Dacă biletul n-a fost încă deschis, arată ora pe care o va avea la deschidere.
+function renderValidity() {
+  carousel.querySelectorAll(".ticket-valid").forEach((el, i) => {
+    const t = tickets[i];
+    const end = starts[t.id]
+      ? endOf(t)
+      : new Date(Date.now() + (t.minutes - t.minutesAgo) * 60000);
+    el.textContent = `Valabil până la ${fmtShort(end)}`;
+  });
+}
+setInterval(renderValidity, 10000);
 
 const slideWidth = () => carousel.firstElementChild.offsetWidth + 15; // card + gap
 const goTo = (i) =>
@@ -195,6 +209,7 @@ function showTicket(i) {
   if (!starts[openTicket.id]) {
     starts[openTicket.id] = Date.now() - openTicket.minutesAgo * 60000;
     saveStarts(starts);
+    renderValidity();
   }
   const loader = $('loader');
   loader.hidden = false;
@@ -231,6 +246,7 @@ $("transactionsBack").addEventListener("click", () => {
 $("tdReset").addEventListener("click", () => {
   starts = {};
   saveStarts(starts);
+  renderValidity();
 });
 
 // Adăugare / eliminare bilete; noul bilet copiază ultimul bilet din listă
