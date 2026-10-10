@@ -1,4 +1,4 @@
-const CACHE_NAME = "tlp-app-v32";
+const CACHE_NAME = "tlp-app-v33";
 const ASSETS = [
   "./",
   "./index.html",
@@ -11,6 +11,7 @@ const ASSETS = [
   "./img/tpl-suceava.jpg",
   "./img/test_qr.png",
   "./img/esx.png",
+  "./img/logo.jpg",
 ];
 
 self.addEventListener("install", (e) => {
