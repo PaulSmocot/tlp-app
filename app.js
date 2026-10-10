@@ -17,7 +17,7 @@ document.querySelectorAll(".nav-item, .nav-scan").forEach((btn) => {
 
 // ─── Portofel: bilete în carusel ───────────────────
 // În detaliu, timpul pornește la prima deschidere (ora telefonului) și se salvează.
-const tickets = [
+const DEFAULT_TICKETS = [
   {
     id: "t1",
     logo: "img/tpl-suceava.jpg",
@@ -43,6 +43,21 @@ const tickets = [
     minutesAgo: 15,
   },
 ];
+
+const TICKETS_KEY = "tlp-test-tickets";
+const loadTickets = () => {
+  try {
+    return JSON.parse(localStorage.getItem(TICKETS_KEY)) || DEFAULT_TICKETS;
+  } catch {
+    return DEFAULT_TICKETS;
+  }
+};
+const saveTickets = () => {
+  try {
+    localStorage.setItem(TICKETS_KEY, JSON.stringify(tickets));
+  } catch {}
+};
+let tickets = loadTickets();
 
 const STORAGE_KEY = "tlp-test-ticket-starts";
 const loadStarts = () => {
@@ -87,12 +102,14 @@ function renderCarousel() {
     </article>`
     )
     .join("");
-}
-renderCarousel();
 
-dots.innerHTML = tickets
-  .map((_, i) => `<span class="dot${i === 0 ? " active" : ""}"></span>`)
-  .join("");
+  dots.innerHTML = tickets
+    .map((_, i) => `<span class="dot${i === 0 ? " active" : ""}"></span>`)
+    .join("");
+  dots
+    .querySelectorAll(".dot")
+    .forEach((d, i) => d.addEventListener("click", () => goTo(i)));
+}
 
 const slideWidth = () => carousel.firstElementChild.offsetWidth + 15; // card + gap
 const goTo = (i) =>
@@ -109,9 +126,7 @@ carousel.addEventListener(
   { passive: true }
 );
 
-dots
-  .querySelectorAll(".dot")
-  .forEach((d, i) => d.addEventListener("click", () => goTo(i)));
+renderCarousel();
 
 // Tragere cu mouse-ul (pe telefon glisarea cu degetul merge nativ)
 let dragStartX = null,
@@ -216,4 +231,27 @@ $("transactionsBack").addEventListener("click", () => {
 $("tdReset").addEventListener("click", () => {
   starts = {};
   saveStarts(starts);
+});
+
+// Adăugare / eliminare bilete; noul bilet copiază ultimul bilet din listă
+function renderTicketCount() {
+  $("ticketCount").textContent = `Bilete: ${tickets.length}`;
+}
+renderTicketCount();
+
+$("ticketAdd").addEventListener("click", () => {
+  const last = tickets[tickets.length - 1];
+  tickets.push({ ...last, id: `t${Date.now()}` });
+  saveTickets();
+  renderCarousel();
+  renderTicketCount();
+});
+$("ticketRemove").addEventListener("click", () => {
+  if (tickets.length <= 1) return;
+  const removed = tickets.pop();
+  delete starts[removed.id];
+  saveStarts(starts);
+  saveTickets();
+  renderCarousel();
+  renderTicketCount();
 });
