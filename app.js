@@ -195,6 +195,18 @@ const endDrag = (e) => {
 carousel.addEventListener("pointerup", endDrag);
 carousel.addEventListener("pointercancel", endDrag);
 
+// ─── Loading 0.3 sec ───────────────────────────────
+// Apare la deschiderea aplicației (e vizibil din HTML) și la fiecare schimbare de pagină.
+function withLoader(fn) {
+  const loader = document.getElementById("loader");
+  loader.hidden = false;
+  setTimeout(() => {
+    fn();
+    loader.hidden = true;
+  }, 300);
+}
+setTimeout(() => (document.getElementById("loader").hidden = true), 300);
+
 // ─── Detaliu bilet ─────────────────────────────────
 const screen = document.getElementById("ticketScreen");
 const $ = (id) => document.getElementById(id);
@@ -226,19 +238,18 @@ function showTicket(i) {
     saveStarts(starts);
     renderValidity();
   }
-  const loader = $("loader");
-  loader.hidden = false;
-  setTimeout(() => {
+  withLoader(() => {
     renderDetail();
     screen.hidden = false;
-    loader.hidden = true;
     detailTimer = setInterval(renderDetail, 1000);
-  }, 300);
+  });
 }
 
 function hideTicket() {
-  screen.hidden = true;
-  clearInterval(detailTimer);
+  withLoader(() => {
+    screen.hidden = true;
+    clearInterval(detailTimer);
+  });
 }
 
 carousel.addEventListener("click", (e) => {
@@ -255,10 +266,12 @@ $("navTransactions").addEventListener("click", () => {
   transactionsScreen.hidden = false;
 });
 $("transactionsBack").addEventListener("click", () => {
-  transactionsScreen.hidden = true;
-  document
-    .querySelectorAll(".nav-item")
-    .forEach((b, i) => b.classList.toggle("active", i === 0));
+  withLoader(() => {
+    transactionsScreen.hidden = true;
+    document
+      .querySelectorAll(".nav-item")
+      .forEach((b, i) => b.classList.toggle("active", i === 0));
+  });
 });
 $("tdReset").addEventListener("click", () => {
   starts = {};
