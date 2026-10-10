@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Test" />
+<title>Test</title>
+<style>
+  html, body { margin: 0; background: #1a1d25; color: #fff; font: 16px -apple-system, sans-serif; }
+  .probe { position: absolute; visibility: hidden; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+  #info { padding: 70px 16px; white-space: pre-wrap; line-height: 1.6; }
+  .bar { position: fixed; left: 0; right: 0; height: 24px; color: #000; font-size: 13px; text-align: center; }
+  #red { bottom: 0; background: #ff3b30; }
+  #green { top: 0; background: #34c759; }
+</style>
+</head>
+<body>
+<div class="probe" id="probe"></div>
+<div id="green" class="bar">sus (top:0)</div>
+<div id="info"></div>
+<div id="red" class="bar">jos (bottom:0)</div>
+<script>
+  const p = getComputedStyle(document.getElementById('probe'));
+  const vv = window.visualViewport;
+  document.getElementById('info').textContent = [
+    'standalone: ' + (navigator.standalone === true),
+    'screen: ' + screen.width + ' x ' + screen.height,
+    'innerHeight: ' + innerHeight,
+    'clientHeight: ' + document.documentElement.clientHeight,
+    'visualViewport: ' + (vv ? vv.width + ' x ' + vv.height : '-'),
+    'safe-top: ' + p.paddingTop,
+    'safe-bottom: ' + p.paddingBottom
+  ].join('\n');
+</script>
+</body>
+</html>
