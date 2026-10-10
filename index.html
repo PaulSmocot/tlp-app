@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#1a1d25" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="TLP" />
+    <title>TLP</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- HEADER -->
+      <header class="header">
+        <div class="logo">
+          <div class="logo-mark">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#1a1d25"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M13 2 4 14h7l-1 8 9-12h-7z" />
+            </svg>
+          </div>
+          <span class="logo-text">TLP</span>
+        </div>
+
+        <div class="header-right">
+          <div class="header-actions">
+            <button class="icon-btn" aria-label="Notificări">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z" />
+                <path d="M10 20.5a2 2 0 0 0 4 0" />
+              </svg>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="icon-btn" aria-label="Setări">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="3" />
+                <path
+                  d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"
+                />
+              </svg>
+            </button>
+            <button class="icon-btn" aria-label="Profil">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="7.5" r="4" />
+                <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- PORTOFEL -->
+      <section class="wallet">
+        <div class="section-header">
+          <h2 class="section-title">Portofel</h2>
+          <button class="section-link">Intră în portofel</button>
+        </div>
+
+        <div class="carousel" id="ticketCarousel"></div>
+        <div class="carousel-dots" id="ticketDots"></div>
+      </section>
+
+      <!-- SERVICII -->
+      <section>
+        <div class="section-header">
+          <h2 class="section-title">Servicii</h2>
+          <button class="section-link">Vezi toate serviciile</button>
+        </div>
+
+        <div class="services-grid">
+          <button class="service-card">
+            <span class="service-icon"
+              ><svg
+                viewBox="0 0 48 50"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              >
+                <rect x="6" y="3" width="36" height="40" rx="6" />
+                <path d="M6 13h36M6 31h36M16 8h16" />
+                <path d="M6 15H2v6M42 15h4v6" />
+                <path d="M12 37h6M30 37h6" />
+                <path d="M10 43v4h6v-4M32 43v4h6v-4M3 47h42" /></svg
+            ></span>
+            <span class="service-name">Transport<br />public</span>
+          </button>
+
+          <button class="service-card">
+            <span class="service-icon"
+              ><svg
+                viewBox="0 0 48 50"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              >
+                <path d="M6 2h26l10 10v36H6z" />
+                <rect x="12" y="22" width="24" height="20" />
+                <path d="M12 32h24M24 22v20M18 27h18M24 37h12M30 22v5" /></svg
+            ></span>
+            <span class="service-name">PrePay</span>
+          </button>
+
+          <button class="service-card">
+            <span class="service-icon"
+              ><svg
+                viewBox="0 0 48 50"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M6 2h36v46l-4.5-4-4.5 4-4.5-4-4.5 4-4.5-4-4.5 4-4.5-4L6 48z"
+                />
+                <path d="M14 12h20M14 20h20M14 28h12" /></svg
+            ></span>
+            <span class="service-name">Plată facturi</span>
+          </button>
+
+          <button class="service-card">
+            <span class="service-icon"
+              ><svg
+                viewBox="0 0 48 50"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              >
+                <circle cx="20" cy="22" r="9" />
+                <path d="M3 48c0-9 7-15 17-15s17 6 17 15z" />
+                <path
+                  d="M34 3l9 3v8c0 6-4 9-9 11-5-2-9-5-9-11V6z"
+                  fill="var(--bg-card)"
+                />
+                <path d="M30.5 13l2.5 2.5 4.5-5" /></svg
+            ></span>
+            <span class="service-name">Asigurări<br />&amp; Pensii</span>
+          </button>
+
+          <button class="service-card muted">
+            <span class="service-icon"
+              ><svg
+                viewBox="0 0 48 50"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="2" y="2" width="44" height="44" rx="2" />
+                <path
+                  d="M16 38V11h10a8 8 0 0 1 0 16H16"
+                  stroke-linejoin="round"
+                /></svg
+            ></span>
+            <span class="service-name">Parcare</span>
+          </button>
+
+          <button class="service-card muted">
+            <span class="service-icon"
+              ><svg
+                viewBox="0 0 48 50"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              >
+                <path d="M18 3h12" />
+                <rect x="8" y="6" width="32" height="38" rx="7" />
+                <path d="M8 26h32M8 14h32" />
+                <path d="M8 18H4v6M40 18h4v6" />
+                <path d="M13 35h6M29 35h6M21 35h6" />
+                <path d="M12 44v4h6v-4M30 44v4h6v-4" /></svg
+            ></span>
+            <span class="service-name">Transport<br />interurban</span>
+          </button>
+
+          <button class="service-card">
+            <span class="service-icon"
+              ><svg
+                viewBox="0 0 48 50"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              >
+                <path d="M28 44H4V4h28v20" />
+                <path d="M14 2h8v4h-8z" />
+                <path
+                  d="M8 13l2 2 3-3M17 13h10M8 23l2 2 3-3M17 23h8M8 33l2 2 3-3M17 33h6"
+                />
+                <path
+                  d="M36 26l9 3v7c0 6-4 9-9 11-5-2-9-5-9-11v-7z"
+                  fill="var(--bg-card)"
+                />
+                <path d="M32 36l3 3 5-5" /></svg
+            ></span>
+            <span class="service-name">RCA &amp;<br />taxe auto</span>
+          </button>
+
+          <button class="service-card">
+            <span class="service-icon service-icon-img"
+              ><img src="img/esx.png" alt=""
+            /></span>
+            <span class="service-name">ESX</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- PARTENERI -->
+      <section class="partners">
+        <div class="section-header">
+          <h2 class="section-title">Parteneri</h2>
+        </div>
+
+        <div class="partner-banner">
+          <div class="partner-top">
+            <div class="pp-badge"><small>PayPoint</small><b>P</b></div>
+            <div class="colet"><span>COLET</span><span>EXPRES</span></div>
+          </div>
+          <div class="partner-bottom">
+            <div>
+              <h3>Comandă online?</h3>
+              <p>
+                Ridică-ți coletul de la<br />magazinul <span>PayPoint</span> din
+                apropiere!
+              </p>
+              <span class="partner-btn">Află mai multe</span>
+            </div>
+            <div class="boxes">📦</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+      <button class="nav-item active">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linejoin="round"
+        >
+          <path d="M3 11 12 3.5 21 11" />
+          <path d="M5 9.5V20h14V9.5" />
+          <path d="M10 20v-5.5h4V20" />
+        </svg>
+        Acasă
+      </button>
+      <button class="nav-item">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+        >
+          <rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1" />
+          <rect x="14" y="3.5" width="6.5" height="6.5" rx="1" />
+          <rect x="3.5" y="14" width="6.5" height="6.5" rx="1" />
+          <rect x="14" y="14" width="6.5" height="6.5" rx="1" />
+        </svg>
+        Servicii
+      </button>
+      <button class="nav-scan">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+        >
+          <path
+            d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3M3 12h18"
+          />
+        </svg>
+        Scanează
+      </button>
+      <button class="nav-item" id="navTransactions">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linejoin="round"
+        >
+          <path d="M4 9h16l-1.5 12h-13z" />
+          <path d="M8.5 9V7a3.5 3.5 0 0 1 7 0v2" />
+          <path d="M4 13.5h16" />
+        </svg>
+        Tranzacții
+      </button>
+      <button class="nav-item">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linejoin="round"
+        >
+          <path d="M18 6V4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16V8H5" />
+          <path d="M21 11h-5a2 2 0 0 0 0 4h5" />
+        </svg>
+        Portofel
+      </button>
+    </nav>
+
+    <!-- DETALIU BILET -->
+    <div class="screen" id="ticketScreen" hidden>
+      <header class="screen-header">
+        <button class="back-btn" id="ticketBack" aria-label="Înapoi">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M15 5l-7 7 7 7" />
+          </svg>
+        </button>
+        <div class="logo">
+          <div class="logo-mark">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#1a1d25"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M13 2 4 14h7l-1 8 9-12h-7z" />
+            </svg>
+          </div>
+          <span class="logo-text">TLP</span>
+        </div>
+      </header>
+
+      <div class="screen-body">
+        <div class="detail-card">
+          <div class="code-frame">
+            <img src="img/test_qr.png" alt="Imagine fictivă – bilet de test" />
+          </div>
+          <p class="remaining" id="tdError"></p>
+          <div class="progress">
+            <div class="progress-fill" id="tdProgress"></div>
+          </div>
+          <div class="progress-dates">
+            <span id="tdStart"></span>
+            <span id="tdEnd"></span>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <dl class="detail-rows">
+            <div>
+              <dt>Tip bilet</dt>
+              <dd id="tdType"></dd>
+            </div>
+            <div>
+              <dt>Data achiziției</dt>
+              <dd id="tdBought"></dd>
+            </div>
+            <div>
+              <dt>Număr comandă</dt>
+              <dd id="tdOrder"></dd>
+            </div>
+          </dl>
+          <button class="outline-btn">Trimite chitanță prin email</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANZACȚII -->
+    <div class="screen" id="transactionsScreen" hidden>
+      <header class="screen-header">
+        <button class="back-btn" id="transactionsBack" aria-label="Înapoi">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M15 5l-7 7 7 7" />
+          </svg>
+        </button>
+        <div class="logo">
+          <div class="logo-mark">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#1a1d25"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M13 2 4 14h7l-1 8 9-12h-7z" />
+            </svg>
+          </div>
+          <span class="logo-text">TLP</span>
+        </div>
+      </header>
+
+      <div class="screen-body">
+        <div class="detail-card">
+          <button class="reset-link" id="tdReset">Resetează testul</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="loader" id="loader" hidden><div class="loader-box"><div class="spinner"></div></div></div>
+
+<script src="app.js"></script>
+  </body>
+</html>
