@@ -461,7 +461,7 @@ button { font-family: inherit; }
 /* ─── BOTTOM NAV ─────────────────────────────────── */
 .bottom-nav {
   position: fixed;
-  bottom: -50px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
