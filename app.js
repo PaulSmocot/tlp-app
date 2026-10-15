@@ -220,11 +220,17 @@ const CODE_SECONDS = 14,
   CODE_LOADING_MS = 300,
   CODE_CYCLE_MS = (CODE_SECONDS + 1) * 1000 + CODE_LOADING_MS;
 function renderCode() {
-  const phase = (Date.now() - starts[openTicket.id]) % CODE_CYCLE_MS;
-  $("tdError").textContent =
-    phase < (CODE_SECONDS + 1) * 1000
-      ? `Cod control valabil ${CODE_SECONDS - Math.floor(phase / 1000)} secunde.`
-      : "Încărcare cod de control";
+  const elapsed = Date.now() - starts[openTicket.id];
+  const phase = elapsed % CODE_CYCLE_MS;
+  const loading = phase >= (CODE_SECONDS + 1) * 1000;
+  $("tdError").textContent = loading
+    ? "Încărcare cod de control"
+    : `Cod control valabil ${CODE_SECONDS - Math.floor(phase / 1000)} secunde.`;
+  // La fiecare apariție a textului „Încărcare cod de control” imaginea alternează test_qr ↔ test_qr1.
+  const loadings = Math.floor(elapsed / CODE_CYCLE_MS) + (loading ? 1 : 0);
+  const src = loadings % 2 ? "img/test_qr1.png" : "img/test_qr.png";
+  const img = document.querySelector(".code-frame img");
+  if (!img.src.endsWith(src)) img.src = src;
 }
 
 function renderDetail() {

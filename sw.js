@@ -1,4 +1,4 @@
-const CACHE_NAME = "tlp-app-v49";
+const CACHE_NAME = "tlp-app-v50";
 const ASSETS = [
   "./",
   "./index.html",
@@ -10,6 +10,7 @@ const ASSETS = [
   "./icons/icon-512.png",
   "./img/tpl-suceava.jpg",
   "./img/test_qr.png",
+  "./img/test_qr1.png",
   "./img/esx.png",
   "./img/logo.png",
   "./img/logo-bilet.png",
