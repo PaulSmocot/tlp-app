@@ -211,7 +211,18 @@ setTimeout(() => (document.getElementById("loader").hidden = true), 300);
 const screen = document.getElementById("ticketScreen");
 const $ = (id) => document.getElementById(id);
 let openTicket = null,
-  detailTimer = null;
+  detailTimer = null,
+  codeTick = 0;
+
+// Cod control: 14 → 0 secunde, apoi 2 secunde „Încărcare cod de control”, apoi din nou de la 14
+const CODE_SECONDS = 14,
+  CODE_LOADING_SECONDS = 2;
+function codeText() {
+  const step = codeTick % (CODE_SECONDS + 1 + CODE_LOADING_SECONDS);
+  return step <= CODE_SECONDS
+    ? `Cod control valabil ${CODE_SECONDS - step} secunde.`
+    : "Încărcare cod de control";
+}
 
 function renderDetail() {
   const t = openTicket;
@@ -225,7 +236,7 @@ function renderDetail() {
   $("tdBought").textContent = fmtLong(start);
   $("tdType").textContent = t.type;
   $("tdOrder").textContent = orderOf(t);
-  $("tdError").textContent = `Cod control valabil 14 secunde.`;
+  $("tdError").textContent = codeText();
   $("tdProgress").style.width = `${
     t.startPercent + ((total - left) / total) * (100 - t.startPercent)
   }%`;
@@ -239,9 +250,13 @@ function showTicket(i) {
     renderValidity();
   }
   withLoader(() => {
+    codeTick = 0;
     renderDetail();
     screen.hidden = false;
-    detailTimer = setInterval(renderDetail, 1000);
+    detailTimer = setInterval(() => {
+      codeTick++;
+      renderDetail();
+    }, 1000);
   });
 }
 
