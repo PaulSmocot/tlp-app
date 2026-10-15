@@ -214,16 +214,17 @@ let openTicket = null,
   detailTimer = null,
   codeTimer = null;
 
-// Cod control: 14 → 0 secunde (câte 1 sec), apoi 0.3 sec „Încărcare cod de control”, apoi din nou de la 14
+// Cod control: 14 → 0 secunde (câte 1 sec), apoi 0.3 sec „Încărcare cod de control”, apoi din nou de la 14.
+// Ciclul e calculat din ora de start a biletului, deci merge singur și nu se resetează la intrare/ieșire.
 const CODE_SECONDS = 14,
-  CODE_LOADING_MS = 300;
-function runCode(n) {
+  CODE_LOADING_MS = 300,
+  CODE_CYCLE_MS = (CODE_SECONDS + 1) * 1000 + CODE_LOADING_MS;
+function renderCode() {
+  const phase = (Date.now() - starts[openTicket.id]) % CODE_CYCLE_MS;
   $("tdError").textContent =
-    n >= 0 ? `Cod control valabil ${n} secunde.` : "Încărcare cod de control";
-  codeTimer = setTimeout(
-    () => runCode(n > 0 ? n - 1 : n === 0 ? -1 : CODE_SECONDS),
-    n >= 0 ? 1000 : CODE_LOADING_MS
-  );
+    phase < (CODE_SECONDS + 1) * 1000
+      ? `Cod control valabil ${CODE_SECONDS - Math.floor(phase / 1000)} secunde.`
+      : "Încărcare cod de control";
 }
 
 function renderDetail() {
@@ -253,8 +254,8 @@ function showTicket(i) {
   withLoader(() => {
     renderDetail();
     screen.hidden = false;
-    clearTimeout(codeTimer);
-    runCode(CODE_SECONDS);
+    renderCode();
+    codeTimer = setInterval(renderCode, 100);
     detailTimer = setInterval(renderDetail, 1000);
   });
 }
@@ -263,7 +264,7 @@ function hideTicket() {
   withLoader(() => {
     screen.hidden = true;
     clearInterval(detailTimer);
-    clearTimeout(codeTimer);
+    clearInterval(codeTimer);
   });
 }
 
