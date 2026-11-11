@@ -295,34 +295,51 @@ $("transactionsBack").addEventListener("click", () => {
       .forEach((b, i) => b.classList.toggle("active", i === 0));
   });
 });
-$("tdReset").addEventListener("click", () => {
-  starts = {};
-  saveStarts(starts);
-  renderValidity();
-});
+// Fiecare secțiune (Zona 1 / Municipal) are aceeași logică, aplicată doar biletelor de tipul ei.
+// Adăugare / eliminare bilete; noul bilet copiază ultimul bilet de același tip (sau primul implicit dacă nu există)
+function setupTicketGroup(type, ids) {
+  const ofType = () => tickets.filter((t) => t.type === type);
+  const renderCount = () => {
+    $(ids.count).textContent = `Bilete: ${ofType().length}`;
+  };
+  renderCount();
 
-// Adăugare / eliminare bilete; noul bilet copiază ultimul bilet (sau primul implicit dacă lista e goală)
-function renderTicketCount() {
-  $("ticketCount").textContent = `Bilete: ${tickets.length}`;
+  $(ids.reset).addEventListener("click", () => {
+    ofType().forEach((t) => delete starts[t.id]);
+    saveStarts(starts);
+    renderValidity();
+  });
+  $(ids.add).addEventListener("click", () => {
+    const last = ofType().pop();
+    const ticket = last
+      ? { ...last, id: `t${Date.now()}`, order: String(Number(last.order) + 1) }
+      : { ...DEFAULT_TICKETS[0], id: `t${Date.now()}`, type };
+    tickets.push(withPattern(ticket, tickets.length));
+    saveTickets();
+    renderCarousel();
+    renderCount();
+  });
+  $(ids.remove).addEventListener("click", () => {
+    const removed = ofType().pop();
+    if (!removed) return;
+    tickets.splice(tickets.indexOf(removed), 1);
+    delete starts[removed.id];
+    saveStarts(starts);
+    saveTickets();
+    renderCarousel();
+    renderCount();
+  });
 }
-renderTicketCount();
 
-$("ticketAdd").addEventListener("click", () => {
-  const last = tickets[tickets.length - 1];
-  const ticket = last
-    ? { ...last, id: `t${Date.now()}`, order: String(Number(last.order) + 1) }
-    : { ...DEFAULT_TICKETS[0], id: `t${Date.now()}` };
-  tickets.push(withPattern(ticket, tickets.length));
-  saveTickets();
-  renderCarousel();
-  renderTicketCount();
+setupTicketGroup("Bilet metropolitan Zona 1", {
+  count: "ticketCount",
+  add: "ticketAdd",
+  remove: "ticketRemove",
+  reset: "tdReset",
 });
-$("ticketRemove").addEventListener("click", () => {
-  if (tickets.length === 0) return;
-  const removed = tickets.pop();
-  delete starts[removed.id];
-  saveStarts(starts);
-  saveTickets();
-  renderCarousel();
-  renderTicketCount();
+setupTicketGroup("Bilet Municipal", {
+  count: "municipalCount",
+  add: "municipalAdd",
+  remove: "municipalRemove",
+  reset: "municipalReset",
 });
