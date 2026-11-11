@@ -88,13 +88,16 @@ const fmtShort = (d) =>
   `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${String(d.getFullYear()).slice(
     2
   )} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
-// Numărul de comandă crește cu 100 pe zi, pornind de la valorile din 10.10.2026
-const ORDER_BASE_DAY = new Date(2026, 9, 10);
+// Numărul de comandă crește cu 100 pe zi; repornit pe 11.11.2026 de la 252818146 (primul bilet)
+const ORDER_BASE_DAY = new Date(2026, 10, 11);
+const ORDER_START = 252818146;
 const orderOf = (t) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const days = Math.round((today - ORDER_BASE_DAY) / 86400000);
-  return String(Number(t.order) + days * 100);
+  return String(
+    Number(t.order) - Number(DEFAULT_TICKETS[0].order) + ORDER_START + days * 100
+  );
 };
 const endOf = (t) => new Date(starts[t.id] + t.minutes * 60000);
 
